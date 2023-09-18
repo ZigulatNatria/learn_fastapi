@@ -18,6 +18,13 @@ test_users = [
 ]
 
 
+user_group = [
+    {'id': 1, 'name': 'group1', 'users': [{'id': 1}, {'id': 2}]},
+    {'id': 2, 'name': 'group2', 'users': [{'id': 3}]},
+    {'id': 3, 'name': 'group3', 'users': [{'id': 4}, {'id': 5}]}
+]
+
+
 # class PlayerItem(BaseModel):
 #     name: str = Field(re.compile(r"[a-f0-9]"))
 #     email: str
@@ -45,3 +52,12 @@ def change_user_name(user_id: int, new_name: str):
 def add_user(new_user: List[User]):
     test_users.extend(new_user)
     return {'status': 200, 'data': test_users}
+
+
+@app.post('/group/')
+def add_user_group(group_id: int, user_id: int):
+    current_group = list(filter(lambda group: group.get('id') == group_id, user_group))
+    current_user = list(filter(lambda user: user.get('id') == user_id, test_users))[0]
+    current_group[0]['users'].append(current_user)
+    print(current_group)
+    return {'status': 200, 'data': current_group}
