@@ -3,6 +3,11 @@ from typing import List
 from fastapi import FastAPI, Query
 from pydantic import BaseModel, Field
 import re
+from sqlalchemy import create_engine
+
+SQLALCHEMY_DATABASE_URL = "postgresql://user:password@postgresserver/db"
+engine = create_engine(SQLALCHEMY_DATABASE_URL)
+
 
 app = FastAPI(
     title='Hello world'
